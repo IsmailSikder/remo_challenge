@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import Firebase from '../services/firebase';
 import { useHistory } from 'react-router-dom';
 import { sendGetRequest, sendPostRequest } from '../apis';
+import { connect } from 'react-redux';
+import {addUser} from 'reducers/user/user-action';
 
-const Auth: React.FC = () => {
+
+const Auth = ({addUser}) => {
   const history = useHistory();
 
   useEffect(() => {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user)
+        addUser(user.displayName)
         // TODO: Store user details
         history.push('/theater');
       }
@@ -38,5 +43,10 @@ const Auth: React.FC = () => {
     </div> 
   );
 };
- 
-export default Auth;
+
+const mapDispatchToProps =(dispatch)=>(
+  {
+    addUser: user=>dispatch(addUser(user))
+  }
+)
+export default connect(null, mapDispatchToProps)(Auth);

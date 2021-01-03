@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import Firebase from '../services/firebase';
+
 import { useHistory } from 'react-router-dom';
 
-const SignIn: React.FC = () => {
-  const history = useHistory();
 
+
+const SignIn = () => {
+  const history = useHistory();
+ 
+  
   useEffect(() => {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user)
+        addUser(user)
         // TODO: Store user details
         history.push('/theater');
       }
@@ -33,4 +39,6 @@ const SignIn: React.FC = () => {
   );
 };
  
-export default SignIn;
+
+
+export default (SignIn)
