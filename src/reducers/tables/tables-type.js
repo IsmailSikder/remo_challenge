@@ -1,5 +1,6 @@
 const tablesActionType ={
-    TABLES_NO :'TABLES_NO'
+    ADD_TO_ROOMS :'ADD_TO_ROOMS',
+    ADD_USER :'ADD_USER',
 }
 
 export default tablesActionType

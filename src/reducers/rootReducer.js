@@ -3,12 +3,12 @@ import { combineReducers } from "redux";
 
 import data from "./gameDataReducer";
 import TablesReducer from "./tables/tables-reducer";
-import { userReducer } from "./user/user-reducer";
+
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 const rootReducer = combineReducers({
-     user : userReducer,
+
      tables : TablesReducer,
 });
 

@@ -4,16 +4,17 @@ import MapImage from '../assets/conference-map.svg';
 
 import { connect } from 'react-redux';
 import {createStructuredSelector} from 'reselect'
-import { selectUserDetails } from 'reducers/user/user-selector';
+import { selectUserDetails } from 'reducers/tables/tables-selector';
 
-import { selectTables } from 'reducers/tables/tables-selector';
-
-
-const Theater = ({user, tableConfig}) => {
+import { selectSeats, selectTables } from 'reducers/tables/tables-selector';
+import {addRooms} from 'reducers/tables/tables-action'
+import GuestSeats from './seats'
+const Theater = ({user, tableConfig,seats, addRooms}) => {
   //const firstTable = TableConfig.tables[0];
   const {tables,width,height} = tableConfig
- 
-  console.log(user)
+  const {first_table} = seats
+ console.log(first_table)
+
   return ( 
     <div className='remo-theater' style={{width: width, height: height}}>
       <div className='rt-app-bar'>
@@ -29,14 +30,25 @@ const Theater = ({user, tableConfig}) => {
         {
           tables.map(table=>{
            return <div className='rt-room' style={{width: table.width, height: table.height, top: table.y, left: table.x}}>
-              <div className='rt-room-name'>{table.id}</div>
-              <div>{user}</div>
+              <div className='rt-room-name'>{table.id}
+              <GuestSeats
+               className='rt-room-name'
+                user={user}
+                seats={seats}
+                tableName = {tables.id}
+              />
+              </div>
+              
             </div> 
            }
            )
+         
         }
+       
       </div>
-     
+        <div>
+          
+        </div>
       <div className='rt-background'>
         <img src={MapImage} alt='Conference background'/>
       </div>
@@ -47,7 +59,14 @@ const Theater = ({user, tableConfig}) => {
 const mapStateToProps = createStructuredSelector(
   {
     user: selectUserDetails,
-    tableConfig: selectTables
+    tableConfig: selectTables,
+    seats : selectSeats
   }
 )
-export default connect(mapStateToProps) (Theater);
+
+const mapDispatchToProps=(dispatch)=>(
+  {
+      addRooms : rooms=>dispatch(addRooms(rooms))
+  }
+)
+export default connect(mapStateToProps,mapDispatchToProps) (Theater);
