@@ -3,7 +3,8 @@ import addUser from './user.utils'
 import userActionType from './userType.js'
 
 const initila_State ={
-    user :['Name1','name2','name3','name4', 'name5']
+    setCurrentUser:false,
+    user :''
 }
 
 export const userReducer =(state=initila_State,action)=>{

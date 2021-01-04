@@ -1,30 +1,42 @@
 import * as React from 'react';
 import './Theater.scss'; 
 import MapImage from '../assets/conference-map.svg';
-import TableConfig from './tableConfig.json';
+
 import { connect } from 'react-redux';
 import {createStructuredSelector} from 'reselect'
-import { selectUser, selectUserDetails } from 'reducers/user/user-selector';
+import { selectUserDetails } from 'reducers/user/user-selector';
+
+import { selectTables } from 'reducers/tables/tables-selector';
 
 
-const Theater = ({user}) => {
-  const firstTable = TableConfig.tables[0];
+const Theater = ({user, tableConfig}) => {
+  //const firstTable = TableConfig.tables[0];
+  const {tables,width,height} = tableConfig
+ 
   console.log(user)
   return ( 
-    <div className='remo-theater' style={{width: TableConfig.width, height: TableConfig.height}}>
+    <div className='remo-theater' style={{width: width, height: height}}>
       <div className='rt-app-bar'>
         {/**
           * Show user profile pic/name after login
           */}
-        <a href='javascript:;'>Logout</a>
+          <h1>{user}</h1>
+        <a href='javascript:;' style={{color: 'red'}}>Logout</a>
       </div>
      
       <div className='rt-rooms'>
         {/** * Create rooms here as in the requirement and make sure it is aligned with background*/}
-        
-        <div className='rt-room' style={{width: firstTable.width, height: firstTable.height, top: firstTable.y, left: firstTable.x}}><div className='rt-room-name'>{firstTable.id}</div>
+        {
+          tables.map(table=>{
+           return <div className='rt-room' style={{width: table.width, height: table.height, top: table.y, left: table.x}}>
+              <div className='rt-room-name'>{table.id}</div>
+              <div>{user}</div>
+            </div> 
+           }
+           )
+        }
       </div>
-      </div>
+     
       <div className='rt-background'>
         <img src={MapImage} alt='Conference background'/>
       </div>
@@ -34,7 +46,8 @@ const Theater = ({user}) => {
  
 const mapStateToProps = createStructuredSelector(
   {
-    user: selectUserDetails
+    user: selectUserDetails,
+    tableConfig: selectTables
   }
 )
 export default connect(mapStateToProps) (Theater);

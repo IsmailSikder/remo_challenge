@@ -1,7 +1,9 @@
 
 const addUser =(user,userToAdd)=>{
         console.log(userToAdd)
-        return [...user,userToAdd]
+        user = userToAdd
+        return   user
+
 }
 
 export default addUser
