@@ -33,30 +33,18 @@ const Theater = ({user, tableConfig,seats}) => {
       <div className='rt-rooms'>
         {/** * Create rooms here as in the requirement and make sure it is aligned with background*/}
         {
-          tables.map(table=>{
+          tables.map((table,id)=>{
            return <div className='rt-room' style={{width: table.width, height: table.height, top: table.y, left: table.x}}>
-                       {
-                            table.seats.map((seat,i,)=>{
-                                  console.log(seat)
-                                 return <span style={{width: table.width, height: table.height,top: seat.y, left: seat.x}}>
-
-                                      {
-                                        i<1?
-                                          seat.y
-                                         :
-                                         ''
-
-                                      }
-                                 
-                                 </span>
-                               })
-                            
-
-                        }
+                 <GuestSeats
+                    className='rt-room-name'
+                    key ={table.id}
+                    index={id}
+                    tableName = {table.id}
+                    table={table}
+                    user={user}
+                />
                 
-              <div className='rt-room-name'>{table.id}
-                  
-              </div>
+              <div className='rt-room-name'>{table.id}</div>
             </div> 
            }
            )
