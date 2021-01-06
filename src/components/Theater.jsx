@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Theater.scss'; 
 import MapImage from '../assets/conference-map.svg';
-
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {createStructuredSelector} from 'reselect'
 import { selectUserDetails } from 'reducers/user/user-selector';
@@ -9,8 +9,11 @@ import { selectUserDetails } from 'reducers/user/user-selector';
 import { selectSeats, selectTables } from 'reducers/tables/tables-selector';
 
 import GuestSeats from './seats'
+import { auth } from 'firebase';
 const Theater = ({user, tableConfig,seats}) => {
   //const firstTable = TableConfig.tables[0];
+  const history = useHistory();
+
   const {tables,width,height} = tableConfig
   const {first_table} = seats
  console.log(first_table)
@@ -22,8 +25,9 @@ const Theater = ({user, tableConfig,seats}) => {
         {/**
           * Show user profile pic/name after login
           */}
-          <h1>{user}</h1>
-        <a href='javascript:;' style={{color: 'red'}}>Logout</a>
+        <span>{user}</span>
+        <button onClick={() => (auth.signOut(),history.push('/'))} >Logout</button>
+       
       </div>
      
       <div className='rt-rooms'>
@@ -32,11 +36,17 @@ const Theater = ({user, tableConfig,seats}) => {
           tables.map(table=>{
            return <div className='rt-room' style={{width: table.width, height: table.height, top: table.y, left: table.x}}>
                        {
-                            table.seats.map(seat=>{
+                            table.seats.map((seat,i,)=>{
                                   console.log(seat)
                                  return <span style={{width: table.width, height: table.height,top: seat.y, left: seat.x}}>
 
-                                      {user}
+                                      {
+                                        i<1?
+                                          seat.y
+                                         :
+                                         ''
+
+                                      }
                                  
                                  </span>
                                })
