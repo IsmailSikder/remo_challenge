@@ -3,7 +3,7 @@ import Firebase from '../services/firebase';
 import { useHistory } from 'react-router-dom';
 import { sendGetRequest, sendPostRequest } from '../apis';
 import { connect } from 'react-redux';
-import {addUser} from 'reducers/tables/tables-action';
+import {addUser} from 'reducers/user/user-action';
 
 
 const Auth = ({addUser}) => {

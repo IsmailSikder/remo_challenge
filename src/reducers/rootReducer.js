@@ -6,10 +6,11 @@ import TablesReducer from "./tables/tables-reducer";
 
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import userReducer from "./user/user-reducer";
 
 const rootReducer = combineReducers({
-
      tables : TablesReducer,
+     user: userReducer
 });
 
 const persistConfig = {
